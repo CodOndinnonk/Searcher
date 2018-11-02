@@ -48,7 +48,7 @@ public class ReadObject implements ReadObjectInterface {
             //if have more than one author
             for (int i = 0; i < authors.length; i++) {
                 //make list of object for each author
-                returnObjects.add(new ReadObject(authors[i], readObject.getTitle()));
+                returnObjects.add(new ReadObject(authors[i].trim(), readObject.getTitle()));
             }
         } else {
             log.info("No authorSeparator found in author string. authorSeparator = " + authorSeparator);

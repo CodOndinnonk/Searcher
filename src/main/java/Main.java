@@ -14,12 +14,12 @@ public class Main {
     private static ArrayList<ReadObject> readObjectList = new ArrayList<ReadObject>();
 
     //as no gui, set them as variables (for now)
-    public static final String fileObjectSeparator = "@";
-        public static final File file = new File("D:\\Cloud\\GitHub\\Searcher\\extras\\big.bib");
-//    public static final File file = new File("D:\\Cloud\\GitHub\\Searcher\\extras\\test.bib");
-    public static final String authorsSeparator = "and";
-
-
+    public static final String fileObjectSeparator = "\n@";
+    public static final File file = new File("D:\\Cloud\\GitHub\\Searcher\\extras\\big.bib");
+    //    public static final File file = new File("D:\\Cloud\\GitHub\\Searcher\\extras\\test.bib");
+    public static final String authorsSeparator = " and ";
+    public static final String stringObjectDataSeparator = "\n";
+    public static final String authorToFind = "Jakub";
 
 
     public static void main(String[] args) {
@@ -38,35 +38,15 @@ public class Main {
         for (int i = 0; i < stringObjects.length; i++) {
             //if line contains object data (not empty)
             if (stringObjects[i].trim().length() > 0) {
-                readObjectList.add(EntityFactory.create(stringObjects[i], ",\n"));
+                readObjectList.add(EntityFactory.create(stringObjects[i], stringObjectDataSeparator));
             }
         }
 
-        separateAuthors(readObjectList);
+        //overwrite list of read entities with splitted list
+        readObjectList = separateAuthors(readObjectList);
 
+        findAuthor(readObjectList, authorToFind);
     }
-
-//    /**
-//     * Perform creation of ReadObject base on string
-//     *
-//     * @param str text with data
-//     * @return -> filled object
-//     * <p>-> NULL, if error
-//     */
-//    private static ReadObject convertStringToObject(@NotNull String str) {
-//        if (str == null || str.trim().length() == 0) {
-//            log.error("str is empty. str = " + str);
-//            return null;
-//        }
-//
-//        ReadObject outObject = EntityFactory.create(str);
-//
-//        if (outObject == null) {
-//            log.error("Can't create object from provided string. str = " + str);
-//        }
-//
-//        return outObject;
-//    }
 
     /**
      * Return income list, with separated authors, if have such
@@ -77,14 +57,28 @@ public class Main {
         ArrayList<ReadObject> separatedAuthorsList = new ArrayList<ReadObject>();
 
         for (int i = 0; i < objects.size(); i++) {
-            if (objects.get(i).getAuthor().contains(authorsSeparator)) {
-                separatedAuthorsList.addAll(ReadObject.split(objects.get(i),authorsSeparator));
-                int test=0;
-        } else {
-            separatedAuthorsList.add(objects.get(i));
+            if (objects.get(i).getAuthor() != null && objects.get(i).getAuthor().contains(authorsSeparator)) {
+                separatedAuthorsList.addAll(ReadObject.split(objects.get(i), authorsSeparator));
+            } else {
+                separatedAuthorsList.add(objects.get(i));
+            }
         }
-        }
-    return separatedAuthorsList;
+        return separatedAuthorsList;
     }
+
+    private static ArrayList<String> findAuthor(ArrayList<ReadObject> objects, String author) {
+        ArrayList<String> authorTitlesList = new ArrayList<String>();
+
+        for (int i = 0; i < objects.size(); i++) {
+            if (objects.get(i).getAuthor() != null) {
+                if (objects.get(i).getAuthor().trim().toLowerCase().contains(author.trim().toLowerCase())) {
+                    authorTitlesList.add(objects.get(i).getTitle());
+                }
+            }
+        }
+        return authorTitlesList;
+    }
+
+
 }
 

@@ -22,7 +22,7 @@ public class EntityFactory {
             log.error("str is empty. str = " + str);
             return null;
         }
-        if (dataSeparator == null || dataSeparator.trim().length() == 0) {
+        if (dataSeparator == null || dataSeparator.length() == 0) {
             log.error("dataSeparator is empty, it has to be set. dataSeparator = " + dataSeparator);
             return null;
         }
@@ -40,40 +40,44 @@ public class EntityFactory {
 
         String[] data = str.split(dataSeparator);
         for (int i = 0; i < data.length; i++) {
-            String test = data[i].trim();
             //set author
-            if (data[i].trim().contains(SearcherConfig.AUTHOR_KEY)) {
-                //if overwrite author
-                if (outObject.getAuthor() != null) {
-                    log.warn("Author has been already set, it will be overwrite. Old = " + outObject.getAuthor() + " New = " + data[i]);
+            for (int j = 0; j < SearcherConfig.AUTHOR_KEY.length; j++) {
+                if (data[i].trim().contains(SearcherConfig.AUTHOR_KEY[j])) {
+                    //if overwrite author
+                    if (outObject.getAuthor() != null) {
+                        log.warn("Author has been already set, it will be overwrite. Old = " + outObject.getAuthor() + " New = " + data[i]);
+                    }
+
+                    //get value after key
+                    String author = data[i].trim().split(SearcherConfig.AUTHOR_KEY[j])[1].trim();
+                    //clean string
+                    author = author.replace("{", "");
+                    author = author.replace("}", "");
+                    author = author.replace("=", "");
+                    author = author.trim();
+
+                    outObject.setAuthor(author);
                 }
-
-                //get value after key
-                String author = data[i].trim().split(SearcherConfig.AUTHOR_KEY)[1].trim();
-                //clean string
-                author = author.replace("{", "");
-                author = author.replace("}", "");
-                author = author.replace("=", "");
-                author = author.trim();
-
-                outObject.setAuthor(author);
             }
             //setTitle
-            if (data[i].trim().contains(SearcherConfig.TITLE_KEY)) {
-                //if overwrite title
-                if (outObject.getTitle() != null) {
-                    log.warn("Title has been already set, it will be overwrite. Old = " + outObject.getTitle() + " New = " + data[i]);
+            for (int j = 0; j < SearcherConfig.TITLE_KEY.length; j++) {
+                if (data[i].trim().contains(SearcherConfig.TITLE_KEY[j])) {
+                    //if overwrite title
+                    if (outObject.getTitle() != null) {
+                        log.warn("Title has been already set, it will be overwrite. Old = " + outObject.getTitle() + " New = " + data[i]);
+                    }
+
+                    //get value after key
+                    String title = data[i].trim().split(SearcherConfig.TITLE_KEY[j])[1].trim();
+                    //clean string
+                    title = title.replace("{", "");
+                    title = title.replace("}", "");
+                    title = title.replace("=", "");
+                    title = title.replace("\"", "");
+                    title = title.trim();
+
+                    outObject.setTitle(title);
                 }
-
-                //get value after key
-                String title = data[i].trim().split(SearcherConfig.TITLE_KEY)[1].trim();
-                //clean string
-                title = title.replace("{", "");
-                title = title.replace("}", "");
-                title = title.replace("=", "");
-                title = title.trim();
-
-                outObject.setTitle(title);
             }
         }
 
