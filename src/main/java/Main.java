@@ -1,7 +1,9 @@
 import Entities.EntityFactory;
 import Entities.ReadObject;
 import Entities.WordObject;
+import Gui.FolderWindow;
 import Gui.InfoWindow;
+import Gui.InputWindow;
 import Utils.FileHelper;
 import org.apache.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
@@ -15,20 +17,85 @@ public class Main {
     private static final org.apache.log4j.Logger log = Logger.getLogger(Main.class);
     private static ArrayList<ReadObject> readObjectList = new ArrayList<ReadObject>();
 
-    //as no gui, set them as variables (for now)
     public static final String fileObjectSeparator = "\n@";
-    public static final File fileIncome = new File("D:\\Cloud\\GitHub\\Searcher\\extras\\big.bib");
-    //    public static final File fileIncome = new File("D:\\Cloud\\GitHub\\Searcher\\extras\\test.bib");
-    public static final File fileOutTitle = new File("D:\\Cloud\\GitHub\\Searcher\\out\\author_titles");
-    public static final File fileOutWords = new File("D:\\Cloud\\GitHub\\Searcher\\out\\titles_words");
     public static final String authorsSeparator = " and ";
     public static final String stringObjectDataSeparator = "\n";
-    public static final String authorToFind = "J";
+
+    public static File fileIncome;
+    public static String outputPath = "C:\\Temp";
+    public static final File fileOutTitle = new File(outputPath + "\\author_titles");
+    public static final File fileOutWords = new File(outputPath + "\\titles_words");
+
+    public static String authorToFind;
+    public static int topWordsPercent;
 
 
     public static void main(String[] args) {
         log.trace("Start program");
 
+        //select income data
+        new FolderWindow("Select file with income data", new FolderWindow.FileCallback() {
+            @Override
+            public void action(File selectedFile) {
+                fileIncome = selectedFile;
+
+                //search author
+                new InputWindow("Write author for search", null, new InputWindow.ICalledInputWindow() {
+                    @Override
+                    public void onInputWindowResult(String enteredStr) {
+                        checkData(enteredStr);
+                        authorToFind = enteredStr;
+
+                        //set top words percent
+                        new InputWindow("Write percent of highly frequent words in author titles", "25", new InputWindow.ICalledInputWindow() {
+                            @Override
+                            public void onInputWindowResult(String enteredStr) {
+                                checkData(enteredStr);
+                                if (enteredStr.matches("[0-9]+")) {
+                                    int enteredNumber = 1;
+                                    try {
+                                        enteredNumber = Integer.valueOf(enteredStr);
+                                        topWordsPercent = enteredNumber;
+                                    } catch (Exception e) {
+                                        log.error("Error on parsing string to int. " + e.getMessage());
+                                        new InfoWindow("Error", "Error on parsing string to int. " + e.getMessage()).showWindow();
+                                        System.exit(0);
+                                    }
+                                } else {
+                                    log.error("Entered data is not number. enteredStr = " + enteredStr);
+                                    new InfoWindow("Error", "Entered data is not number. It's necessary for processing. Program will close.").showWindow();
+                                    System.exit(0);
+                                }
+                            }
+                        }).showWindow();
+
+                        processing();
+                    }
+                }).showWindow();
+            }
+        }).showWindow();
+
+    }
+
+    /**
+     * Check user entered text for data, if have some errors, inform and close program
+     *
+     * @param str text? untered by user
+     */
+    private static void checkData(String str) {
+        //if nothing entered inform and close
+        if (str == null || str.trim().length() == 0) {
+            log.error("Entered data is empty. It's necessary for processing.. Program will close.");
+            new InfoWindow("Error", "Entered data is empty. It's necessary for processing. Program will close.").showWindow();
+            System.exit(0);
+        }
+    }
+
+
+    /**
+     * Contains main program logic
+     */
+    private static void processing() {
         //read income data
         String fileStr = FileHelper.readFile(fileIncome);
 
@@ -71,10 +138,18 @@ public class Main {
             }
             FileHelper.writeFile(fileOutWords, wordsToSave);
 
+            //show info
+            new InfoWindow("Information", "Two files associated with author = '" + authorToFind + "' were outputted and located here: " + outputPath).showWindow();
+
         } else {
             new InfoWindow("Warning", "No authors found by entered key. key = " + authorToFind).showWindow();
         }
     }
+
+    private static void setUserConfiguration() {
+
+    }
+
 
     /**
      * Return income list, with separated authors, if have such
