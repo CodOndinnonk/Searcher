@@ -1,14 +1,11 @@
 package Entities;
 
 import Utils.SearcherConfig;
-import org.jetbrains.annotations.NotNull;
 import org.apache.log4j.Logger;
-
-import java.util.ArrayList;
+import org.jetbrains.annotations.NotNull;
 
 public class EntityFactory {
     private static final org.apache.log4j.Logger log = Logger.getLogger(EntityFactory.class);
-
 
     /**
      * Perform creation of ReadObject base on string
@@ -90,7 +87,6 @@ public class EntityFactory {
                 log.error("Some data is empty. Author = " + outObject.getAuthor() + " Title = " + outObject.getTitle());
             }
         }
-
 
         //parse income object
         return outObject;

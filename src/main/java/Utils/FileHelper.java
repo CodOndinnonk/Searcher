@@ -1,7 +1,7 @@
 package Utils;
 
-import org.jetbrains.annotations.NotNull;
 import org.apache.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -11,12 +11,13 @@ public class FileHelper {
 
     /**
      * Perform reading fileIncome by lines
+     *
      * @param file fileIncome to read
      * @return -> String with fileIncome data
      * <p>-> NULL, if fileIncome don't exist or any error
      */
     public static String readFile(@NotNull File file) {
-        if (file == null){
+        if (file == null) {
             log.error("File is NULL.");
             return null;
         }
@@ -58,27 +59,27 @@ public class FileHelper {
     }
 
 
-
     /**
      * Save string to fileIncome (OVERRIDE)
+     *
      * @param text data to save
      * @return 1 -> wrote successfully
      * <p>-1 -> error
      * <p>0 -> didn't wrote, as text is empty
      */
-    public static int writeFile(@NotNull File file,@NotNull String text) {
-        if (file == null){
+    public static int writeFile(@NotNull File file, @NotNull String text) {
+        if (file == null) {
             log.error("File is NULL.");
             return -1;
         }
-        if (text == null || text.trim().length() == 0){
+        if (text == null || text.trim().length() == 0) {
             log.error("Text is empty. text = " + text);
             return 0;
         }
 
         try {
             //create fileIncome if don't exist
-            if(!file.exists()){
+            if (!file.exists()) {
                 file.createNewFile();
             }
 
@@ -92,7 +93,7 @@ public class FileHelper {
                 //close fileIncome to complete operation
                 out.close();
             }
-        } catch(IOException e) {
+        } catch (IOException e) {
             log.error("Error on writing fileIncome. " + e.toString());
             return -1;
         }

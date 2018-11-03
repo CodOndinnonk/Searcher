@@ -15,6 +15,9 @@ public class WordObject {
         this.quantity = qty;
     }
 
+    /**
+     * Comparator, allows to sort collection in descending order by {@link WordObject#quantity}
+     */
     public static Comparator<WordObject> qtyComparatorDescending = new Comparator<WordObject>() {
         @Override
         public int compare(WordObject o1, WordObject o2) {

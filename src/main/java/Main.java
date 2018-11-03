@@ -3,13 +3,12 @@ import Entities.ReadObject;
 import Entities.WordObject;
 import Gui.InfoWindow;
 import Utils.FileHelper;
-
-
 import org.apache.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class Main {
@@ -30,6 +29,7 @@ public class Main {
     public static void main(String[] args) {
         log.trace("Start program");
 
+        //read income data
         String fileStr = FileHelper.readFile(fileIncome);
 
         if (fileStr == null) {
@@ -50,10 +50,11 @@ public class Main {
         //overwrite list of read entities with splitted list
         readObjectList = separateAuthors(readObjectList);
 
-
+        //get titles, associated with author
         ArrayList<String> titles = findAuthor(readObjectList, authorToFind);
 
         if (titles.size() > 0) {
+            //get top words from titles
             ArrayList<WordObject> topWords = getTopWords(titles, 25);
 
             //save file with titles
@@ -79,8 +80,9 @@ public class Main {
      * Return income list, with separated authors, if have such
      *
      * @param objects list of read object
+     * @return -> list of objects with separated authors (can be bigger than income list)
      */
-    private static ArrayList<ReadObject> separateAuthors(ArrayList<ReadObject> objects) {
+    private static ArrayList<ReadObject> separateAuthors(@NotNull ArrayList<ReadObject> objects) {
         ArrayList<ReadObject> separatedAuthorsList = new ArrayList<ReadObject>();
 
         for (int i = 0; i < objects.size(); i++) {
@@ -98,9 +100,19 @@ public class Main {
      *
      * @param objects list of objects  to search in
      * @param author  text to find
-     * @return list of titles associated with author
+     * @return -> list of titles associated with author
+     * <p>-> NULL, if error
      */
     private static ArrayList<String> findAuthor(@NotNull ArrayList<ReadObject> objects, String author) {
+        if (objects == null || objects.size() == 0) {
+            log.error("objects is empty.");
+            return null;
+        }
+        if (author == null || author.trim().length() == 0) {
+            log.error("author is empty. author = " + author);
+            return null;
+        }
+
         ArrayList<String> authorTitlesList = new ArrayList<String>();
 
         for (int i = 0; i < objects.size(); i++) {
@@ -117,6 +129,14 @@ public class Main {
     }
 
 
+    /**
+     * Perform getting top percent of records by qty
+     *
+     * @param titlesList list of titles, for getting words
+     * @param topPercent percent of records to get, ∈ [1,100]
+     * @return -> list with top highly frequent words, in frequency order
+     * <p>-> NULL, if error
+     */
     private static ArrayList<WordObject> getTopWords(@NotNull ArrayList<String> titlesList, int topPercent) {
         if (titlesList == null || titlesList.size() == 0) {
             log.error("titlesList is empty.");

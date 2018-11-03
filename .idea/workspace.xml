@@ -2,24 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="16bf56d0-c5bc-4af0-80da-4451a229dcac" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/Entities/WordObject.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/extras/test.bib" beforeDir="false" afterPath="$PROJECT_DIR$/extras/test.bib" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Entities/EntityFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Entities/EntityFactory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Entities/ReadObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Entities/ReadObject.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Utils/FileHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Utils/FileHelper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/log4j.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/log4j.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Entities/EntityFactory.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Entities/EntityFactory.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Entities/ReadObject.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Entities/ReadObject.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Entities/ReadObjectInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Entities/ReadObjectInterface.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Gui/IFrameWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Gui/IFrameWindow.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Gui/InfoWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Gui/InfoWindow.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Main$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Utils/FileHelper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Utils/FileHelper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Utils/SearcherConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Utils/SearcherConfig.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -63,14 +50,14 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="55" />
-          <entry key="java" value="6448" />
+          <entry key="java" value="6921" />
           <entry key="properties" value="115" />
           <entry key="xml" value="12" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="6448" />
+          <entry key="JAVA" value="6921" />
           <entry key="PLAIN_TEXT" value="55" />
           <entry key="Properties" value="115" />
           <entry key="XML" value="12" />
@@ -83,13 +70,13 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="26" column="48" selection-start-line="26" selection-start-column="48" selection-end-line="26" selection-end-column="48" />
+            <state relative-caret-position="335">
+              <caret line="136" column="29" selection-start-line="136" selection-start-column="29" selection-end-line="136" selection-end-column="29" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="docComment;method#separateAuthors#0;class#Main#0" expanded="true" />
                 <element signature="docComment;method#findAuthor#0;class#Main#0" expanded="true" />
-                <element signature="e#3839#3851#0" expanded="true" />
+                <element signature="e#5079#5091#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -157,7 +144,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/Entities/EntityFactory.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="143">
-              <caret line="79" selection-start-line="79" selection-end-line="79" />
+              <caret line="77" selection-start-line="77" selection-end-line="77" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="docComment;method#create#0;class#EntityFactory#0" expanded="true" />
@@ -179,7 +166,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/Entities/ReadObject.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="592">
-              <caret line="58" selection-start-line="58" selection-end-line="58" />
+              <caret line="57" selection-start-line="57" selection-end-line="57" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="docComment;method#split#0;class#ReadObject#0" expanded="true" />
@@ -353,6 +340,7 @@
     <property name="project.structure.last.edited" value="Global Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.36666667" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -406,12 +394,12 @@
       <option name="presentableId" value="Default" />
       <updated>1541097110630</updated>
       <workItem from="1541097115558" duration="15590000" />
-      <workItem from="1541204513218" duration="12469000" />
+      <workItem from="1541204513218" duration="13247000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="28059000" />
+    <option name="totallyTimeSpent" value="28837000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="848" extended-state="6" />
@@ -425,7 +413,7 @@
       <window_info id="Favorites" order="5" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32867134" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49932885" visible="true" weight="0.32867134" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49932885" weight="0.32867134" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.33286715" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -519,7 +507,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/Entities/EntityFactory.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="143">
-          <caret line="79" selection-start-line="79" selection-end-line="79" />
+          <caret line="77" selection-start-line="77" selection-end-line="77" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="docComment;method#create#0;class#EntityFactory#0" expanded="true" />
@@ -541,7 +529,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/Entities/ReadObject.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="592">
-          <caret line="58" selection-start-line="58" selection-end-line="58" />
+          <caret line="57" selection-start-line="57" selection-end-line="57" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="docComment;method#split#0;class#ReadObject#0" expanded="true" />
@@ -591,13 +579,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="26" column="48" selection-start-line="26" selection-start-column="48" selection-end-line="26" selection-end-column="48" />
+        <state relative-caret-position="335">
+          <caret line="136" column="29" selection-start-line="136" selection-start-column="29" selection-end-line="136" selection-end-column="29" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="docComment;method#separateAuthors#0;class#Main#0" expanded="true" />
             <element signature="docComment;method#findAuthor#0;class#Main#0" expanded="true" />
-            <element signature="e#3839#3851#0" expanded="true" />
+            <element signature="e#5079#5091#0" expanded="true" />
           </folding>
         </state>
       </provider>
