@@ -1,9 +1,12 @@
 import Entities.EntityFactory;
 import Entities.ReadObject;
+import Entities.WordObject;
 import Gui.InfoWindow;
 import Utils.FileHelper;
-import com.sun.istack.internal.NotNull;
+
+
 import org.apache.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.*;
@@ -15,8 +18,10 @@ public class Main {
 
     //as no gui, set them as variables (for now)
     public static final String fileObjectSeparator = "\n@";
-    public static final File file = new File("D:\\Cloud\\GitHub\\Searcher\\extras\\big.bib");
-    //    public static final File file = new File("D:\\Cloud\\GitHub\\Searcher\\extras\\test.bib");
+    public static final File fileIncome = new File("D:\\Cloud\\GitHub\\Searcher\\extras\\big.bib");
+    //    public static final File fileIncome = new File("D:\\Cloud\\GitHub\\Searcher\\extras\\test.bib");
+    public static final File fileOutTitle = new File("D:\\Cloud\\GitHub\\Searcher\\out\\author_titles");
+    public static final File fileOutWords = new File("D:\\Cloud\\GitHub\\Searcher\\out\\titles_words");
     public static final String authorsSeparator = " and ";
     public static final String stringObjectDataSeparator = "\n";
     public static final String authorToFind = "J";
@@ -25,11 +30,11 @@ public class Main {
     public static void main(String[] args) {
         log.trace("Start program");
 
-        String fileStr = new FileHelper().readFile(file);
+        String fileStr = FileHelper.readFile(fileIncome);
 
         if (fileStr == null) {
             log.warn("No data to process");
-            new InfoWindow("Warning", "Can't read file " + file.getAbsolutePath()).showWindow();
+            new InfoWindow("Warning", "Can't read fileIncome " + fileIncome.getAbsolutePath()).showWindow();
             return;
         }
 
@@ -48,8 +53,26 @@ public class Main {
 
         ArrayList<String> titles = findAuthor(readObjectList, authorToFind);
 
-        getTopWords(titles, 25);
+        if (titles.size() > 0) {
+            ArrayList<WordObject> topWords = getTopWords(titles, 25);
 
+            //save file with titles
+            String titlesToSave = "";
+            for (String title : titles) {
+                titlesToSave += title + "\n";
+            }
+            FileHelper.writeFile(fileOutTitle, titlesToSave);
+
+            //save file with words
+            String wordsToSave = "";
+            for (WordObject wordObject : topWords) {
+                wordsToSave += wordObject.getWord() + "\n";
+            }
+            FileHelper.writeFile(fileOutWords, wordsToSave);
+
+        } else {
+            new InfoWindow("Warning", "No authors found by entered key. key = " + authorToFind).showWindow();
+        }
     }
 
     /**
@@ -77,13 +100,16 @@ public class Main {
      * @param author  text to find
      * @return list of titles associated with author
      */
-    private static ArrayList<String> findAuthor(ArrayList<ReadObject> objects, String author) {
+    private static ArrayList<String> findAuthor(@NotNull ArrayList<ReadObject> objects, String author) {
         ArrayList<String> authorTitlesList = new ArrayList<String>();
 
         for (int i = 0; i < objects.size(); i++) {
             if (objects.get(i).getAuthor() != null) {
                 if (objects.get(i).getAuthor().trim().toLowerCase().contains(author.trim().toLowerCase())) {
-                    authorTitlesList.add(objects.get(i).getTitle());
+                    //if hasn't such title, add it
+                    if (!authorTitlesList.contains(objects.get(i).getTitle())) {
+                        authorTitlesList.add(objects.get(i).getTitle());
+                    }
                 }
             }
         }
@@ -91,7 +117,7 @@ public class Main {
     }
 
 
-    private static ArrayList<String> getTopWords(@NotNull ArrayList<String> titlesList, int topPercent) {
+    private static ArrayList<WordObject> getTopWords(@NotNull ArrayList<String> titlesList, int topPercent) {
         if (titlesList == null || titlesList.size() == 0) {
             log.error("titlesList is empty.");
             return null;
@@ -101,64 +127,47 @@ public class Main {
             return null;
         }
 
-        HashMap<String, Long> words = new HashMap<String, Long>();
+        ArrayList<WordObject> words = new ArrayList<WordObject>();
 
-        //todo заменить на foreach
         //get titles and separate by words
-        for (int i = 0; i < titlesList.size(); i++) {
-            if (titlesList.get(i) != null) {
-                String[] titleWords = titlesList.get(i).split(" ");
+        for (String title : titlesList) {
+            if (title != null) {
+                String[] titleWords = title.split(" ");
                 //perform calculation of words
-                for (int j = 0; j < titleWords.length; j++) {
+                for (String word : titleWords) {
                     //if letters, not spec symbol
+
 //сделать регулярку на не буквы
-                    if (titleWords[j].toString().p)
-                    if (words.containsKey(titleWords[j])) {
-                        words.put(titleWords[j], words.get(titleWords[j]) + 1);
-                    } else {
-                        words.put(titleWords[j], Long.valueOf(1));
+                    if (word.matches(".{0,}[A-z]+.{0,}")) {
+
+                        //if list contains object with word
+                        if (words.stream().map(WordObject::getWord).filter(word::equals).findFirst().isPresent()) {
+                            words.stream()
+                                    .filter(wordObject -> word.equals(wordObject.getWord()))
+                                    .findAny()
+                                    .orElse(null).incrementQty();
+//                            words.i(titleWords[j], words.get(titleWords[j]) + 1);
+                        } else {
+                            words.add(new WordObject(word, 1));
+                        }
                     }
                 }
             }
         }
 
-        int selectWordsAmt = words.size() / 100 * topPercent;
+        int selectWordsAmt = Math.round(words.size() / 100 * topPercent);
 
-
-        return null;
-    }
-
-
-    private static Map<String, Integer> sortByValue(Map<String, Integer> unsortedMap) {
-
-        //Convert Map to List of Map
-        List<Map.Entry<String, Integer>> list =
-                new LinkedList<Map.Entry<String, Integer>>(unsortedMap.entrySet());
-
-        //Sort list with Collections.sort(), provide a custom Comparator
-        //Try switch the o1 o2 position for a different order
-        Collections.sort(list, new Comparator<Map.Entry<String, Integer>>() {
-            public int compare(Map.Entry<String, Integer> o1,
-                               Map.Entry<String, Integer> o2) {
-                return (o1.getValue()).compareTo(o2.getValue());
-            }
-        });
-
-        //Loop the sorted list and put it into a new insertion order Map LinkedHashMap
-        Map<String, Integer> sortedMap = new LinkedHashMap<String, Integer>();
-        for (Map.Entry<String, Integer> entry : list) {
-            sortedMap.put(entry.getKey(), entry.getValue());
+        //set to show at least 1 word
+        if (selectWordsAmt < 1) {
+            selectWordsAmt = 1;
         }
 
-        /*
-        //classic iterator example
-        for (Iterator<Map.Entry<String, Integer>> it = list.iterator(); it.hasNext(); ) {
-            Map.Entry<String, Integer> entry = it.next();
-            sortedMap.put(entry.getKey(), entry.getValue());
-        }*/
+        //sort list by qty descending
+        Collections.sort(words, WordObject.qtyComparatorDescending);
 
+        words = new ArrayList<>(words.subList(0, selectWordsAmt));
 
-        return sortedMap;
+        return words;
     }
 
 

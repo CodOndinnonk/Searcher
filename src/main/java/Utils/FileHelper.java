@@ -1,6 +1,6 @@
 package Utils;
 
-import com.sun.istack.internal.NotNull;
+import org.jetbrains.annotations.NotNull;
 import org.apache.log4j.Logger;
 
 import java.io.*;
@@ -10,12 +10,12 @@ public class FileHelper {
     private static final org.apache.log4j.Logger log = Logger.getLogger(FileHelper.class);
 
     /**
-     * Perform reading file by lines
-     * @param file file to read
-     * @return -> String with file data
-     * <p>-> NULL, if file don't exist or any error
+     * Perform reading fileIncome by lines
+     * @param file fileIncome to read
+     * @return -> String with fileIncome data
+     * <p>-> NULL, if fileIncome don't exist or any error
      */
-    public String readFile(@NotNull File file) {
+    public static String readFile(@NotNull File file) {
         if (file == null){
             log.error("File is NULL.");
             return null;
@@ -27,7 +27,7 @@ public class FileHelper {
             try {
                 BufferedReader in = new BufferedReader(new FileReader(file.getAbsoluteFile()));
                 try {
-                    //read file by line
+                    //read fileIncome by line
                     String s;
                     while ((s = in.readLine()) != null) {
                         sb.append(s);
@@ -38,7 +38,7 @@ public class FileHelper {
                     in.close();
                 }
             } catch (IOException e) {
-                log.error("Error on reading file. " + e.toString());
+                log.error("Error on reading fileIncome. " + e.toString());
             }
         } else {
             log.warn("File hasn't been found");
@@ -46,7 +46,7 @@ public class FileHelper {
         }
 
         if (sb.toString().length() == 0) {
-            log.warn("Read file is empty");
+            log.warn("Read fileIncome is empty");
         }
 
         //return created string by lines
@@ -60,7 +60,7 @@ public class FileHelper {
 
 
     /**
-     * Save string to file (OVERRIDE)
+     * Save string to fileIncome (OVERRIDE)
      * @param text data to save
      * @return 1 -> wrote successfully
      * <p>-1 -> error
@@ -77,7 +77,7 @@ public class FileHelper {
         }
 
         try {
-            //create file if don't exist
+            //create fileIncome if don't exist
             if(!file.exists()){
                 file.createNewFile();
             }
@@ -85,15 +85,15 @@ public class FileHelper {
             PrintWriter out = new PrintWriter(file.getAbsoluteFile());
 
             try {
-                //write text to the file
+                //write text to the fileIncome
                 out.print(text);
                 return 1;
             } finally {
-                //close file to complete operation
+                //close fileIncome to complete operation
                 out.close();
             }
         } catch(IOException e) {
-            log.error("Error on writing file. " + e.toString());
+            log.error("Error on writing fileIncome. " + e.toString());
             return -1;
         }
     }

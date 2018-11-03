@@ -2,7 +2,7 @@ package Entities;
 
 
 import Utils.FileHelper;
-import com.sun.istack.internal.NotNull;
+import org.jetbrains.annotations.NotNull;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;

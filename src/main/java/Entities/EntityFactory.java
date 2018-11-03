@@ -1,7 +1,7 @@
 package Entities;
 
 import Utils.SearcherConfig;
-import com.sun.istack.internal.NotNull;
+import org.jetbrains.annotations.NotNull;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
@@ -54,6 +54,7 @@ public class EntityFactory {
                     author = author.replace("{", "");
                     author = author.replace("}", "");
                     author = author.replace("=", "");
+                    author = author.replace(",", "");
                     author = author.trim();
 
                     outObject.setAuthor(author);
@@ -74,6 +75,7 @@ public class EntityFactory {
                     title = title.replace("}", "");
                     title = title.replace("=", "");
                     title = title.replace("\"", "");
+                    title = title.replace(",", "");
                     title = title.trim();
 
                     outObject.setTitle(title);
