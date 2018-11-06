@@ -33,48 +33,7 @@ public class Main {
     public static void main(String[] args) {
         log.trace("Start program");
 
-        //select income data
-        new FolderWindow("Select file with income data", new FolderWindow.FileCallback() {
-            @Override
-            public void action(File selectedFile) {
-                fileIncome = selectedFile;
-
-                //search author
-                new InputWindow("Write author for search", null, new InputWindow.ICalledInputWindow() {
-                    @Override
-                    public void onInputWindowResult(String enteredStr) {
-                        checkData(enteredStr);
-                        authorToFind = enteredStr;
-
-                        //set top words percent
-                        new InputWindow("Write percent of highly frequent words in author titles", "25", new InputWindow.ICalledInputWindow() {
-                            @Override
-                            public void onInputWindowResult(String enteredStr) {
-                                checkData(enteredStr);
-                                if (enteredStr.matches("[0-9]+")) {
-                                    int enteredNumber = 1;
-                                    try {
-                                        enteredNumber = Integer.valueOf(enteredStr);
-                                        topWordsPercent = enteredNumber;
-                                    } catch (Exception e) {
-                                        log.error("Error on parsing string to int. " + e.getMessage());
-                                        new InfoWindow("Error", "Error on parsing string to int. " + e.getMessage()).showWindow();
-                                        System.exit(0);
-                                    }
-                                } else {
-                                    log.error("Entered data is not number. enteredStr = " + enteredStr);
-                                    new InfoWindow("Error", "Entered data is not number. It's necessary for processing. Program will close.").showWindow();
-                                    System.exit(0);
-                                }
-                            }
-                        }).showWindow();
-
-                        processing();
-                    }
-                }).showWindow();
-            }
-        }).showWindow();
-
+        setUserConfiguration();
     }
 
     /**
@@ -147,7 +106,47 @@ public class Main {
     }
 
     private static void setUserConfiguration() {
+        //select income data
+        new FolderWindow("Select file with income data", new FolderWindow.FileCallback() {
+            @Override
+            public void action(File selectedFile) {
+                fileIncome = selectedFile;
 
+                //search author
+                new InputWindow("Write author for search", null, new InputWindow.ICalledInputWindow() {
+                    @Override
+                    public void onInputWindowResult(String enteredStr) {
+                        checkData(enteredStr);
+                        authorToFind = enteredStr;
+
+                        //set top words percent
+                        new InputWindow("Write percent of highly frequent words in author titles", "25", new InputWindow.ICalledInputWindow() {
+                            @Override
+                            public void onInputWindowResult(String enteredStr) {
+                                checkData(enteredStr);
+                                if (enteredStr.matches("[0-9]+")) {
+                                    int enteredNumber = 1;
+                                    try {
+                                        enteredNumber = Integer.valueOf(enteredStr);
+                                        topWordsPercent = enteredNumber;
+                                    } catch (Exception e) {
+                                        log.error("Error on parsing string to int. " + e.getMessage());
+                                        new InfoWindow("Error", "Error on parsing string to int. " + e.getMessage()).showWindow();
+                                        System.exit(0);
+                                    }
+                                } else {
+                                    log.error("Entered data is not number. enteredStr = " + enteredStr);
+                                    new InfoWindow("Error", "Entered data is not number. It's necessary for processing. Program will close.").showWindow();
+                                    System.exit(0);
+                                }
+                            }
+                        }).showWindow();
+
+                        processing();
+                    }
+                }).showWindow();
+            }
+        }).showWindow();
     }
 
 
@@ -232,7 +231,6 @@ public class Main {
                 for (String word : titleWords) {
                     //if letters, not spec symbol
 
-//сделать регулярку на не буквы
                     if (word.matches(".{0,}[A-z]+.{0,}")) {
 
                         //if list contains object with word
@@ -241,7 +239,6 @@ public class Main {
                                     .filter(wordObject -> word.equals(wordObject.getWord()))
                                     .findAny()
                                     .orElse(null).incrementQty();
-//                            words.i(titleWords[j], words.get(titleWords[j]) + 1);
                         } else {
                             words.add(new WordObject(word, 1));
                         }

@@ -37,17 +37,6 @@ public class FolderWindow implements IFrameWindow {
     @Override
     public int showWindow() {
         jFrame = new JFrame(title);
-//        jFrame.addWindowListener(new java.awt.event.WindowAdapter() {
-//            @Override
-//            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-//                if (JOptionPane.showConfirmDialog(jFrame,
-//                        "Are you sure you want to close this window?", "Close Window?",
-//                        JOptionPane.YES_NO_OPTION,
-//                        JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
-//                    System.exit(0);
-//                }
-//            }
-//        });
         Container contentPane = jFrame.getContentPane();
 
 
